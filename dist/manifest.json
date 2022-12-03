@@ -1,0 +1,131 @@
+{
+  "id": "scriptlibrary",
+  "name": "ScriptLibrary",
+  "version": "1.0.0",
+  "main": "index.html",
+  "manifestVersion": 5,
+  "host": [
+    {
+      "app": "PS",
+      "minVersion": "22.0.0"
+    }
+  ],
+  "requiredPermissions": {
+    "allowCodeGenerationFromStrings": true,
+    "network": {
+      "domains": "all"
+    },
+    "launchProcess": {
+      "schemes": [
+        "http",
+        "https"
+      ],
+      "extensions": [
+        ".svg",
+        ".png",
+        ".json"
+      ]
+    }
+  },
+  "entrypoints": [
+    {
+      "type": "command",
+      "id": "updateManifestLink",
+      "label": {
+        "default": "Update Manifest List"
+      }
+    },
+
+    {
+      "type": "panel",
+      "id": "library",
+      "label": {
+        "default": "Library"
+      },
+      "minimumSize": {
+        "width": 230,
+        "height": 50
+      },
+      "maximumSize": {
+        "width": 2000,
+        "height": 100
+      },
+      "preferredDockedSize": {
+        "width": 230,
+        "height": 50
+      },
+      "preferredFloatingSize": {
+        "width": 230,
+        "height": 50
+      },
+      "icons": [
+        {
+          "width": 32,
+          "height": 32,
+          "path": "icons/icon_D.png",
+          "scale": [
+            1,
+            2
+          ],
+          "theme": [
+            "dark",
+            "darkest"
+          ],
+          "species": [
+            "generic"
+          ]
+        },
+        {
+          "width": 32,
+          "height": 32,
+          "path": "icons/icon_N.png",
+          "scale": [
+            1,
+            2
+          ],
+          "theme": [
+            "lightest",
+            "light"
+          ],
+          "species": [
+            "generic"
+          ]
+        }
+      ]
+    }
+  ],
+  "icons": [
+    {
+      "width": 32,
+      "height": 32,
+      "path": "icons/icon_D.png",
+      "scale": [
+        1,
+        2
+      ],
+      "theme": [
+        "dark",
+        "darkest"
+      ],
+      "species": [
+        "generic"
+      ]
+    },
+    {
+      "width": 32,
+      "height": 32,
+      "path": "icons/icon_N.png",
+      "scale": [
+        1,
+        2
+      ],
+      "theme": [
+        "lightest",
+        "light"
+      ],
+      "species": [
+        "generic"
+      ]
+    }
+  ]
+}
