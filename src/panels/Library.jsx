@@ -1,23 +1,15 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {TabsContainer} from "../components/TabsContainer";
 import {Shelf} from "../components/Shelf";
 import {retrieveLocalManifest} from "../DataHander";
 
-export const Library = () => {
-
-  useEffect(() =>{
-    const manifest = retrieveLocalManifest()
-    console.log(manifest)
-  })
-
-  async function getManifest(){
-
-  }
+export const Library = (props) => {
 
   return (
     <div>
+      <label>{props.manifest}</label>
       <TabsContainer/>
-      <Shelf/>
+      {/*<Shelf buttons={props.manifest}/>*/}
     </div>
   )
 } 

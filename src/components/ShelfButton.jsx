@@ -2,10 +2,11 @@ import React from "react";
 
 
 
-export const ShelfButton = () => {
+export const ShelfButton = (props) => {
   return (
     <div className={"shelfButton"}>
-      <img src={"C:\\Users\\Scott\\Pictures\\waves.png"} alt={"None"}></img>
+      {props.item.Name}
+
     </div>
   )
 }
