@@ -57,7 +57,7 @@ export const ShelfButton = (props) => {
 
 
     return (
-    <div className={"shelfButton"} onClick={runCode()}>
+    <div className={"shelfButton"} onClick={() => runCode()}>
         {<image src={getResourceFromServer('icon')}> </image>}
         <sp-label>{props.item.Name}</sp-label>
     </div>

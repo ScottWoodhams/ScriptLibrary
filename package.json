@@ -1,5 +1,5 @@
 {
-  "name": "script.library",
+  "name": "com.adobe.uxp.starter.react",
   "version": "1.0.0",
   "scripts": {
     "preinstall": "npx npm-force-resolutions",
@@ -10,7 +10,7 @@
     "uxp:watch": "cd dist && nodemon --exec \"uxp plugin reload\" -e js,css,html",
     "uxp:debug": "cd dist && uxp plugin debug"
   },
-  "author": "Scott woodhams",
+  "author": "Adobe Inc",
   "license": "Apache-2.0",
   "devDependencies": {
     "@babel/core": "^7.8.7",

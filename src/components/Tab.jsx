@@ -2,10 +2,10 @@ import React from "react";
 import "./Tab.css"
 
 
-export const Tab = () => {
+export const Tab = (props) => {
   return (
     <div className={"tab"}>
-      Tab
+      {props.item.name}
     </div>
   )
 }

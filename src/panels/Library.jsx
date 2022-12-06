@@ -8,8 +8,8 @@ export const Library = (props) => {
   return (
     <div>
       <label>{props.manifest}</label>
-      <TabsContainer/>
-      {/*<Shelf buttons={props.manifest}/>*/}
+      <TabsContainer tabs={props.manifest}/>
+      <Shelf buttons={props.manifest}/>
     </div>
   )
 } 
