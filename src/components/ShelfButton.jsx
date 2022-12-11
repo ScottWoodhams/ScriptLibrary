@@ -1,65 +1,47 @@
 import React from "react";
+import {retrieveManifestLink} from "../DataHander";
 
 
-export const ShelfButton = (props) => {
+export const ShelfButton = ({name,icon,tooltip,script}, key) => {
 
 
+  const imgurl = retrieveManifestLink().replace("manifest.json", `icons/${icon}.png`)
+  //const imgurl = "/icons/icon_D.png"
+  const imageRef = React.useRef();
+    React.useEffect(() => {
+        console.log(imgurl)
+        fetch(imgurl)
+          .then(res => res.blob()) // Gets the response and returns it as a blob
+          .then(blob => {
+              let objectURL = URL.createObjectURL(blob);
+              console.log(imageRef.current);
+              imageRef.current.src = objectURL;
+          });
+    }, []);
 
-    async function getResourceFromServer(resourceType){
 
-        let url = "";
-        if(resourceType === "icon"){
-            url = 'https://raw.githubusercontent.com/ScottWoodhams/PS-UI-Exporter/main/plugin/icons/icon_D.png'
-        } else if (resourceType === "script") {
-            url = props.item.scriptPath;
-        }
-
-        const options = {
-            method: "GET"
-        }
-
-        let response = await fetch(url, options)
-
-        if (response.status === 200) {
-
-            const imageBlob = await response.blob()
-            return URL.createObjectURL(imageBlob)
-        }
-        else {
-            console.log("HTTP-Error: " + response.status)
-            return ""
-        }
-    }
-
-    function runCode(){
-        let scriptURL = getResourceFromServer('script')
-        loadScript(scriptURL, () =>{
-
-        })
-    }
-
-    /**
-     * Used to load and execute javascript file.
-     * @param file JS file name
-     * @param callback Subscribe to get notified when script file is loaded
-     **/
-    function loadScript(file, callback) {
-        let script = document.createElement("script");
-        script.src = file;
-
-        script.onload = function () {
-            callback();
-        };
-
-        // append and execute script
-        document.documentElement.firstChild.appendChild(script);
-    }
+    // /**
+    //  * Used to load and execute javascript file.
+    //  * @param file JS file name
+    //  * @param callback Subscribe to get notified when script file is loaded
+    //  **/
+    // function loadScript(file, callback) {
+    //     let script = document.createElement("script");
+    //     script.src = file;
+    //
+    //     script.onload = function () {
+    //         callback();
+    //     };
+    //
+    //     // append and execute script
+    //     document.documentElement.firstChild.appendChild(script);
+    // }
 
 
     return (
-    <div className={"shelfButton"} onClick={() => runCode()}>
-        {<image src={getResourceFromServer('icon')}> </image>}
-        <sp-label>{props.item.Name}</sp-label>
+    <div className={"shelfButton"}>
+        <img ref={imageRef} id="myImg" width="128" height="128"  alt={'hi'}/>
+      <label>hi</label>
     </div>
   )
 }
