@@ -1,52 +1,57 @@
-const path = require("path");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
+const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-module.exports = {
-    entry: './src/index.jsx',
+module.exports = function(_env, argv) {
+  const isProduction = argv.mode === 'production';
+  const isDevelopment = !isProduction;
+
+  return {
+    devtool: isDevelopment && 'cheap-module-source-map',
+    entry: './src/index.tsx',
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'index.js',
-        //libraryTarget: "commonjs2"
+      path: path.resolve(__dirname, 'dist'),
+      filename: 'index.js',
+      publicPath: '/',
     },
-    devtool: 'cheap-eval-source-map', // won't work on XD due to lack of eval
     externals: {
-        uxp: 'commonjs2 uxp',
-        photoshop: 'commonjs2 photoshop',
-        os: 'commonjs2 os'
+      photoshop: 'commonjs2 photoshop',
+      uxp: 'commonjs2 uxp',
     },
     resolve: {
-        extensions: [".js", ".jsx"]
+      modules: [path.resolve(__dirname, 'node_modules')],
+      extensions: ['.ts', '.tsx', '.js', 'jsx', '.css'],
     },
     module: {
-        rules: [
+      rules: [
+        {
+          test: /\.(jsx?|tsx?)$/,
+          resolve: {
+            extensions: ['.js', 'jsx', '.ts', '.tsx'],
+          },
+          exclude: /(node_modules)/,
+          use: [
             {
-                test: /\.jsx?$/,
-                exclude: /node_modules/,
-                loader: "babel-loader",
-                options: {
-                    plugins: [
-                        "@babel/transform-react-jsx",
-                        "@babel/proposal-object-rest-spread",
-                        "@babel/plugin-syntax-class-properties",
-                    ]
-                }
+              loader: 'babel-loader',
+              options: {
+                cacheDirectory: true,
+                cacheCompression: false,
+                envName: isProduction ? 'production' : 'development',
+              },
             },
-            {
-                test: /\.png$/,
-                exclude: /node_modules/,
-                loader: 'file-loader'
-            },
-            {
-                test: /\.css$/,
-                use: ["style-loader", "css-loader"]
-            }
-        ]
+          ],
+        },
+        {
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader'],
+        },
+      ],
     },
     plugins: [
-        //new CleanWebpackPlugin(),
-        new CopyPlugin(['plugin'], {
-            copyUnmodified: true
-        })
-    ]
+      new CleanWebpackPlugin(),
+      new CopyPlugin(['plugin'], {
+        copyUnmodified: true,
+      }),
+    ],
+  };
 };
