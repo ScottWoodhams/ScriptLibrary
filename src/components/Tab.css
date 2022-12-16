@@ -10,3 +10,9 @@
     color: white;
     text-align: center;
 }
+
+.tab[target=active]{
+    background-color: green;
+
+
+}

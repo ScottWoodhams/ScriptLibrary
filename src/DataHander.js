@@ -20,7 +20,7 @@ export function storeManifestLink(link) {
 export function retrieveManifestLink(){
   let link = storage.localStorage.getItem("manifestLink")
   if(link === null || link === ""){
-    return "https://raw.githubusercontent.com/ScottWoodhams/UXPScripts/master/manifest.json";
+    return "https://raw.githubusercontent.com/ScottWoodhams/UXPScripts/dev/manifest.json";
   }
   return link;
 }
@@ -29,8 +29,8 @@ export function storeManifest(manifest) {
   storage.localStorage.setItem("manifest", manifest)
 }
 
-export function retrieveLocalManifest(){
-  return storage.localStorage.getItem("manifest")
+export function retrieveLocalManifest() {
+  return JSON.parse(storage.localStorage.getItem("manifest"))
 }
 
 export function getClientManifestVersion(){

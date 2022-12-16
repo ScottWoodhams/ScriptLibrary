@@ -2,10 +2,10 @@ import React from "react";
 import "./Tab.css"
 
 
-export const Tab = (props) => {
+export const Tab = ({item, onActiveTabUpdate, key, isActive}) => {
   return (
-    <div className={"tab"}>
-      {props.item.name}
+    <div className={"tab"} target={isActive} onClick={() => onActiveTabUpdate(item.name)}>
+      {item.name}
     </div>
   )
 }

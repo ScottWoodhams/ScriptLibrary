@@ -3,13 +3,19 @@ import "./Shelf.css"
 import {ShelfButton} from "./ShelfButton";
 
 
-export const Shelf = (props) => {
+export const Shelf = ({shelf}) => {
 
   return (
     <div className={"shelf"}>
       {
-        props.buttons.map((item) => (
-          <ShelfButton key={item.Name} item={item}/>
+        shelf.buttons.map((button) => (
+          <ShelfButton
+            key={button.name}
+            name={button.name}
+            icon={button.icon}
+            tooltip={button.tooltip}
+            script={button.scriptPath}>
+          </ShelfButton>
         ))
       }
       </div>
