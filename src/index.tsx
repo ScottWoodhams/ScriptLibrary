@@ -2,16 +2,69 @@ import '@babel/polyfill';
 import ReactDOM from 'react-dom';
 import React from 'react';
 
-import { core as psCore } from 'photoshop';
-import {App} from "./App";
+import { PanelController } from "./controllers/PanelController.jsx";
+
+import { entrypoints } from "uxp";
+import {Library} from "./panels/Library";
+import {
+    isNewManifestVersionAvailable,
+    retrieveLocalManifest,
+    retrieveManifestLink, storeManifestFromServer,
+    storeManifestLink,
+} from "./DataHandler";
+import {CommandController} from "./controllers/CommandController";
+import { UpdateManifestLinkDialog} from "./panels/UpdateManifestLink";
 
 
-// Render dialog to DOM, this will show the UI in the container, like a panel
-ReactDOM.render(<App />, document.getElementById('root'));
+async function updateManifest() {
+    try {
+        console.log("update manifest")
+        let updateAvailable = await isNewManifestVersionAvailable();
+        console.log(updateAvailable)
+        if(updateAvailable){
+            await storeManifestFromServer();
+            console.log("reload")
 
-function commandHello() {
-    psCore.showAlert({ message: '? Hi!' });
+            window.location.reload(true);
+        }
+    } catch (e) {
+        console.error(e)
+    }
 }
 
-// @ts-expect-error install menu on window
-window.commandHello = commandHello;
+const libraryController = new PanelController(() =>
+    <Library manifest={retrieveLocalManifest()}/>,{
+    id: "library",
+    menuItems:[
+        { id: "update", label: "Update", enabled: true, checked: false, oninvoke: () => updateManifest() }
+    ]
+})
+
+const manifestLinkController = new CommandController(
+    ({ dialog }) => <UpdateManifestLinkDialog dialog={dialog} currentLink={retrieveManifestLink()}/>,
+    {
+        id: "updateManifestLink",
+        title: "React Starter Plugin Demo",
+        size: { width: 480, height: 480 },
+    }
+);
+
+// const aboutController = new CommandController()
+
+
+entrypoints.setup({
+    plugin: {
+        create(plugin) {
+            console.log("created", plugin);
+        },
+        destroy() {
+            /* optional */ console.log("destroyed");
+        }
+    },
+    commands: {
+        updateManifestLink: manifestLinkController
+    },
+    panels: {
+        library: libraryController,
+    }
+});

@@ -1,12 +1,9 @@
 import React from "react";
 
-
-
-export const App = () => {
+export const Library = () => {
     return (
         <div>
             <button> Hello! </button>
-
         </div>
     )
 }
