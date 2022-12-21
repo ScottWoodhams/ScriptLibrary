@@ -1,39 +1,23 @@
 import '@babel/polyfill';
-import ReactDOM from 'react-dom';
 import React from 'react';
-
-import { PanelController } from "./controllers/PanelController.jsx";
-
+import { PanelController } from "./controllers/PanelController";
 import { entrypoints } from "uxp";
 import {Library} from "./panels/Library";
-import {
-    isNewManifestVersionAvailable,
-    retrieveLocalManifest,
-    retrieveManifestLink, storeManifestFromServer,
-    storeManifestLink,
-} from "./DataHandler";
+import * as dataHandler from "./DataHandler"
 import {CommandController} from "./controllers/CommandController";
 import { UpdateManifestLinkDialog} from "./panels/UpdateManifestLink";
 
 
 async function updateManifest() {
-    try {
-        console.log("update manifest")
-        let updateAvailable = await isNewManifestVersionAvailable();
-        console.log(updateAvailable)
-        if(updateAvailable){
-            await storeManifestFromServer();
-            console.log("reload")
-
-            window.location.reload(true);
-        }
-    } catch (e) {
-        console.error(e)
+    let updateAvailable: boolean = await dataHandler.isNewManifestVersionAvailable();
+    if(updateAvailable){
+        await dataHandler.storeManifestFromServer();
+        window.location.reload();
     }
 }
 
 const libraryController = new PanelController(() =>
-    <Library manifest={retrieveLocalManifest()}/>,{
+    <Library manifest={dataHandler.retrieveLocalManifest()}/>, {
     id: "library",
     menuItems:[
         { id: "update", label: "Update", enabled: true, checked: false, oninvoke: () => updateManifest() }
@@ -41,24 +25,16 @@ const libraryController = new PanelController(() =>
 })
 
 const manifestLinkController = new CommandController(
-    ({ dialog }) => <UpdateManifestLinkDialog dialog={dialog} currentLink={retrieveManifestLink()}/>,
+    ({ dialog }) => <UpdateManifestLinkDialog dialog={dialog} currentLink={dataHandler.retrieveManifestLink()}/>,
     {
-        id: "updateManifestLink",
-        title: "React Starter Plugin Demo",
-        size: { width: 480, height: 480 },
+        id: "Update Manifest Link",
     }
 );
-
-// const aboutController = new CommandController()
-
 
 entrypoints.setup({
     plugin: {
         create(plugin) {
-            console.log("created", plugin);
-        },
-        destroy() {
-            /* optional */ console.log("destroyed");
+            console.clear()
         }
     },
     commands: {

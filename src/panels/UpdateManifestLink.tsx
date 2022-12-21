@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import { versions } from "uxp";
 import os from "os";
 import {retrieveManifestLink} from "../DataHandler";
-import {Button, Divider, Heading, Icon} from "react-uxp-spectrum";
+import {Button, Divider, Heading, Icon, Textfield} from "react-uxp-spectrum";
 
 export const UpdateManifestLinkDialog = (props) => {
     const [link, getLink] = useState("");
@@ -27,7 +27,6 @@ export const UpdateManifestLinkDialog = (props) => {
                 updates via pull requests would be greatly appreciated!
             </sp-body>
             <sp-body class="well">
-                <Icon name="ui:InfoBig" size="s"></Icon>
                 Due to the limits of the UXP environments access top your local filesystem, I recommend hosting your own scripts on a server rather
                 than on your local machine.
             </sp-body>
@@ -39,7 +38,7 @@ export const UpdateManifestLinkDialog = (props) => {
                 </div>
                 <div>
                     <sp-detail>NEW:</sp-detail>
-                    <sp-textfield label="Manifest Link" />
+                    <Textfield value="Manifest Link" />
                     <sp-body>
                         {" "}
                         {os.platform()} {os.release()}
@@ -52,21 +51,18 @@ export const UpdateManifestLinkDialog = (props) => {
             </div>
             <div>
                 <Button
-                    tabindex={0}
                     variant="secondary"
-                    quiet="quiet"
+                    quiet={true}
                     onClick={() => props.dialog.close("reasonCanceled")}
                 >
                     Cancel
                 </Button>
-                <sp-button
-                    tabindex={0}
-                    autofocus="autofocus"
+                <Button
                     variant="primary"
                     onClick={() => props.dialog.close("ok")}
                 >
                     OK
-                </sp-button>
+                </Button>
             </div>
         </form>
     );

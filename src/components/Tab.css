@@ -1,0 +1,18 @@
+.tab {
+    margin-right: 12px;
+}
+.tab sp-label {
+    color: rgba(255,255,255,0.75);
+}
+
+.tab:hover sp-label {
+    color: white;
+}
+
+.tab.selected {
+    border-bottom: 2px solid white;
+    margin-bottom: -2px;
+}
+.tab.selected sp-label {
+    color: white;
+}
