@@ -27,17 +27,6 @@ async function updateManifest() {
 // 	}
 // );
 
-const manifestLinkController = new CommandController(
-	({ dialog }) => (
-		<UpdateManifestLinkDialog
-			dialog={dialog}
-			currentLink={dataHandler.retrieveManifestLink()}
-		/>
-	),
-	{
-		id: "Update Manifest Link"
-	}
-);
 
 entrypoints.setup({
 	plugin: {
@@ -46,7 +35,7 @@ entrypoints.setup({
 		}
 	},
 	commands: {
-		updateManifestLink: manifestLinkController
+		// updateManifestLink: manifestLinkController
 	},
 	panels: {
 		//library: libraryController
