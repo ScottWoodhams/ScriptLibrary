@@ -20,5 +20,12 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "no-tabs":"off",
+        "tabs": "off",
+        "quotes":"off",
+        "semi":"off",
+        "indent":"off",
+        "space-before-function-paren":"off"
+
     }
 }

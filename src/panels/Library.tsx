@@ -1,38 +1,27 @@
-import React, {useState} from "react";
-import {Tabs} from "../components/Tabs";
-import {Shelf} from "../components/Shelf";
+import React, { useState } from "react";
+import { Tabs } from "../components/Tabs";
+import { Shelf } from "../components/Shelf";
+import { Manifest } from "../Manifest";
 
+export type LibraryProps = {manifest: Manifest};
+export const Library = ({ manifest }: LibraryProps) => {
+    const [activeShelf, setActiveShelf] = useState("");
 
-export const Library = (props) => {
+    function updateActiveShelf(name: string) {
+        setActiveShelf(name);
+        // set tabs to be selected or unselected
+        Array.from(document.querySelectorAll(".tab")).forEach(tab => {
+            tab.id === activeShelf ? tab.classList.add("selected") : tab.classList.remove("selected");
+		});
+    };
 
-    function updateCurrentActiveShelf(activeShelf){
-
-        console.log("New Shelf: " + activeShelf)
-        localStorage.setItem("currentTab", activeShelf);
-        Array.from(document.querySelectorAll(".tab")).forEach(tab =>{
-            console.log(tab)
-            if(tab.id === activeShelf){
-                tab.classList.add("selected");
-                console.log("sele")
-            } else{
-                tab.classList.remove("selected");
-            }
-        });
-
-        Array.from(document.querySelectorAll(".shelf")).forEach(shelf => {
-            if (shelf.getAttribute("id").startsWith(activeShelf.getAttribute("id"))) {
-                shelf.classList.add("visible");
-            } else {
-                shelf.classList.remove("visible");
-            }
-        });
-
-    }
-
-    return (
-        <div>
-            <Tabs tabs={props.manifest.shelves} onActiveTabUpdate={(e) => updateCurrentActiveShelf(e)}/>
-            <Shelf shelf={props.manifest.shelves[0]}/>
-        </div>
-    )
-}
+	return (
+		<div>
+			<Tabs
+				tabs={manifest.shelves}
+				onActiveTabUpdate={(e: string) => updateActiveShelf(e)}
+			/>
+			<Shelf shelf={manifest.shelves[activeShelf]} />
+		</div>
+	);
+};
