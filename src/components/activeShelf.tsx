@@ -3,13 +3,13 @@ import { ShelfButton } from "./shelfButton";
 import { Button } from "../Manifest";
 
 export type ActiveShelfProps = {
-	Buttons: Button[];
+	buttons: Button[];
 };
 //* Container for buttons which displays all the buttons for the active shelf
-export const ActiveShelf = ({ Buttons }: ActiveShelfProps) => {
+export const ActiveShelf = ({ buttons }: ActiveShelfProps) => {
 	return (
 		<div>
-			{Buttons.map((item, index) => (
+			{buttons.map((item, index) => (
 				<ShelfButton
 					key={index}
 					Name={item.name}
