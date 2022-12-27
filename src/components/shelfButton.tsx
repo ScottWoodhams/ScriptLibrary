@@ -2,6 +2,7 @@ import React from "react";
 import { loadIcon } from "../DataHandler";
 
 export type ShelfButtonProps = {
+	key: number;
 	Name: string;
 	icon: string;
 	scriptPath: string;
