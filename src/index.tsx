@@ -2,10 +2,7 @@ import "@babel/polyfill";
 import React from "react";
 import { PanelController } from "./controllers/PanelController";
 import { entrypoints } from "uxp";
-import { Library } from "./panels/Library";
-import * as dataHandler from "./DataHandler";
-import { CommandController } from "./controllers/CommandController";
-import { UpdateManifestLinkDialog } from "./panels/UpdateManifestLink";
+import { MainPanel } from "./panels/MainPanel";
 
 async function updateManifest() {
 	window.location.reload();
@@ -27,6 +24,18 @@ async function updateManifest() {
 // 	}
 // );
 
+const mainPanelController = new PanelController(() => <MainPanel />, {
+	id: "shelf",
+	menuItems: [
+		{
+			id: "update",
+			label: "Update",
+			enabled: true,
+			checked: false,
+			oninvoke: () => updateManifest()
+		}
+	]
+});
 
 entrypoints.setup({
 	plugin: {
@@ -38,6 +47,6 @@ entrypoints.setup({
 		// updateManifestLink: manifestLinkController
 	},
 	panels: {
-		//library: libraryController
+		shelf: mainPanelController
 	}
 });
