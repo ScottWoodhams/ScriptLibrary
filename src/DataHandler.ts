@@ -16,7 +16,10 @@ function isWebLink(link: string): boolean {
 
 export async function loadManifest(): Promise<Manifest> {
 	const manifestLink: string = retrieveManifestLink();
-	console.log("🚀 ~ file: DataHandler.ts:19 ~ loadManifest ~ retrieveManifestLink", retrieveManifestLink)
+	console.log(
+		"🚀 ~ file: DataHandler.ts:19 ~ loadManifest ~ retrieveManifestLink",
+		retrieveManifestLink
+	);
 
 	// Load external manifest
 	let externalManifest: Manifest = null;
@@ -58,4 +61,15 @@ export async function loadManifest(): Promise<Manifest> {
 
 		return localManifest;
 	}
+}
+
+export async function loadIcon(iconName: string): Promise<string> {
+	const imgurl = retrieveManifestLink().replace(
+		"manifest.json",
+		`icons/${iconName}.png`
+	);
+
+	const res = await fetch(imgurl);
+	const blob = await res.blob();
+	return URL.createObjectURL(blob);
 }

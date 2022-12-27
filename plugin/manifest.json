@@ -38,9 +38,9 @@
 
     {
       "type": "panel",
-      "id": "library",
+      "id": "shelf",
       "label": {
-        "default": "Library"
+        "default": "shelf"
       },
       "minimumSize": {
         "width": 230,
