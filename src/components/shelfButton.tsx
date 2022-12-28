@@ -1,5 +1,6 @@
 import React from "react";
-import { loadIcon } from "../DataHandler";
+import { loadIcon, retrieveManifestLink } from "../DataHandler";
+import "./shelfButton.css";
 
 export type ShelfButtonProps = {
 	key: number;
@@ -16,9 +17,16 @@ export const ShelfButton = ({
 	tooltip
 }: ShelfButtonProps) => {
 	const imageRef = React.useRef();
+	const imgurl = retrieveManifestLink().replace("manifest.json", `icons/${icon}.svg`)
 
 	React.useEffect(() => {
-		imageRef.current.src = loadIcon(icon);
+		fetch(imgurl)
+			.then(res => res.blob()) // Gets the response and returns it as a blob
+			.then(blob => {
+				if (imageRef.current !== undefined) {
+					imageRef.current.src = URL.createObjectURL(blob);
+				}
+			});
 	}, []);
 
 	function runScript() {
@@ -34,15 +42,15 @@ export const ShelfButton = ({
 	}
 
 	return (
-			<img
-                title={"tooltip"}
-                ref={imageRef}
-                id="icon"
-                width="64"
-                height="64"
-                alt={'hi'}
-                onClick={() => runScript()}
-
-            />
+		<img
+			className={"shelfButton"}
+			title={"tooltip"}
+			ref={imageRef}
+			id="icon"
+			width="36"
+			height="36"
+			alt={"hi"}
+			onClick={() => runScript()}
+		/>
 	);
 };

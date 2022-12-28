@@ -1,0 +1,6 @@
+.shelfButton{
+    height: 36px;
+    width: 36px;
+    display: flex;
+    flex-flow: column;
+}
