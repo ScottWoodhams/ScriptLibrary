@@ -3,26 +3,21 @@ import React from "react";
 import { PanelController } from "./controllers/PanelController";
 import { entrypoints } from "uxp";
 import { MainPanel } from "./panels/MainPanel";
+import { CommandController } from "./controllers/CommandController";
+import { UpdateManifestLinkDialog } from "./panels/ManifestLinkDialog";
 
 async function updateManifest() {
 	window.location.reload();
 }
 
-// const libraryController = new PanelController(
-// 	async () => <Library manifest={ await dataHandler.loadManifest()} />,
-// 	{
-// 		id: "library",
-// 		menuItems: [
-// 			{
-// 				id: "update",
-// 				label: "Update",
-// 				enabled: true,
-// 				checked: false,
-// 				oninvoke: () => updateManifest()
-// 			}
-// 		]
-// 	}
-// );
+const manifestLinkController = new CommandController(({ dialog }) => (
+	<UpdateManifestLinkDialog
+		dialog={dialog}
+	/>
+),
+{
+	id: "Update Manifest Link"
+})
 
 const mainPanelController = new PanelController(() => <MainPanel />, {
 	id: "shelf",
@@ -44,7 +39,7 @@ entrypoints.setup({
 		}
 	},
 	commands: {
-		// updateManifestLink: manifestLinkController
+		updateManifestLink: manifestLinkController
 	},
 	panels: {
 		shelf: mainPanelController

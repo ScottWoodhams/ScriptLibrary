@@ -4,10 +4,15 @@ import { Manifest } from "./Manifest";
 
 export function retrieveManifestLink(): string {
 	const link: string = storage.localStorage.getItem("manifestLink");
+
 	if (link === null || link === "") {
 		return "https://raw.githubusercontent.com/ScottWoodhams/UXPScripts/dev/manifest.json";
 	}
 	return link;
+}
+
+export function storeManifestLink(link: string): void {
+	storage.localStorage.setItem("manifestLink", link);
 }
 
 function isWebLink(link: string): boolean {
