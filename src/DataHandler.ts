@@ -14,22 +14,24 @@ function isWebLink(link: string): boolean {
 	return link.startsWith("https://") || link.startsWith("http://");
 }
 
+function storeRemoteManifest(manifest: Manifest) {
+	storage.localStorage.setItem("manifest", JSON.stringify(manifest));
+}
+
 export async function loadManifest(): Promise<Manifest> {
 	const manifestLink: string = retrieveManifestLink();
-	console.log(
-		"🚀 ~ file: DataHandler.ts:19 ~ loadManifest ~ retrieveManifestLink",
-		retrieveManifestLink
-	);
 
-	// Load external manifest
-	let externalManifest: Manifest = null;
+	//* --- START Load both local and remote manifests ---
 
-	// get external manifest depending on if the link is a web link or not
+	// Load remote manifest
+	let remoteManifest: Manifest = null;
+
+	// get remote manifest depending on if the link is a web link or not
 	if (isWebLink(manifestLink)) {
 		const myObject: Response = await fetch(manifestLink);
-		externalManifest = JSON.parse(await myObject.text());
+		remoteManifest = JSON.parse(await myObject.text());
 	} else {
-		externalManifest = JSON.parse(
+		remoteManifest = JSON.parse(
 			await fs.readFile(manifestLink, { encoding: "utf-8" })
 		);
 	}
@@ -39,27 +41,23 @@ export async function loadManifest(): Promise<Manifest> {
 		storage.localStorage.getItem("manifest")
 	);
 
-	// if no manifest exist - throw error
-	if (localManifest === null && externalManifest === null) {
-		app.showAlert(
-			"Script manifest not found. Update manifest link via panel menu"
-		);
-		return null;
-	}
+	//* --------------------------------------
+	const localExist = localManifest !== null;
+	const remoteExist = remoteManifest !== null;
+	//* --------------------------------------
 
-	// Check if manifests are different
-	if (externalManifest.version !== localManifest.version) {
-		// store the external manifest locally and return it
-
-		storage.localStorage.setItem(
-			"manifest",
-			JSON.stringify(externalManifest)
-		);
-		return externalManifest;
-	} else {
-		// return the locally stored manifest
-
+	if (localExist && remoteExist) {
+		if (remoteManifest.version !== localManifest.version) {
+			storeRemoteManifest(remoteManifest);
+		}
+		return remoteManifest;
+	} else if (!localExist && remoteExist) {
+		storeRemoteManifest(remoteManifest);
+		return remoteManifest;
+	} else if (localExist && !remoteExist) {
 		return localManifest;
+	} else {
+		return null;
 	}
 }
 

@@ -34,7 +34,6 @@ export const ShelfButton = ({
 	}
 
 	return (
-		<div>
 			<img
                 title={"tooltip"}
                 ref={imageRef}
@@ -45,6 +44,5 @@ export const ShelfButton = ({
                 onClick={() => runScript()}
 
             />
-		</div>
 	);
 };

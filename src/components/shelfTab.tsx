@@ -1,20 +1,18 @@
 import React from "react";
 
 export type ShelfTabProps = {
-	key: string;
+	name: string;
 	onTabChange: (name: string) => void;
 };
 
 // * Tab button when clicked on will send an event to change the active shelf
-export const ShelfTab = ({ key, onTabChange }: ShelfTabProps) => {
+export const ShelfTab = ({ name, onTabChange }: ShelfTabProps) => {
 	return (
-		<div>
 			<button
 				className="btn btn-primary"
-				onClick={() => onTabChange(key)}
+				onClick={() => onTabChange(name)}
 			>
-				{key}
+				{name}
 			</button>
-		</div>
 	);
 };

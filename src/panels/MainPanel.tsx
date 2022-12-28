@@ -9,7 +9,11 @@ export const MainPanel = () => {
 	const [activeShelf, setActiveShelf] = useState<Shelf>();
 	const [manifest, setManifest] = useState<Manifest>();
 
-	function toggleActiveShelf(shelf) {
+	function toggleActiveShelf(shelf: string) {
+		if (manifest === undefined || manifest === null) {
+			setActiveShelf(manifest.shelves[0]);
+			return;
+		}
 		for (let i = 0; i < manifest.shelves.length; i++) {
 			if (manifest.shelves[i].name === shelf) {
 				setActiveShelf(manifest.shelves[i]);
@@ -19,16 +23,49 @@ export const MainPanel = () => {
 	}
 
 	useEffect(() => {
-		loadManifest().then(manifest => setManifest(manifest));
+		const fetchManifest = async () => {
+			const manifest = await loadManifest();
+			console.log(
+				"🚀 ~ file: MainPanel.tsx:28 ~ fetchManifest ~ manifest",
+				manifest
+			);
+			setManifest(manifest);
+			setActiveShelf(manifest.shelves[0]);
+		};
+
+		fetchManifest().catch(console.error);
 	}, []);
 
+	function getShelves() {
+		const dummyShelf: Shelf = { name: "Dummy", buttons: [] };
+		const dummyShelves = [dummyShelf];
+
+		if (manifest === undefined || manifest === null) {
+			return dummyShelves;
+		}
+
+		if (manifest.shelves === undefined || manifest.shelves === null) {
+			return dummyShelves;
+		}
+
+		return manifest.shelves;
+	}
+
+	function getButtons() {
+		if (activeShelf === undefined || activeShelf === null) {
+			return [];
+		} else {
+			return activeShelf.buttons;
+		}
+	}
+
 	return (
-		<div>
+		<div id={"MainPanel"}>
 			<Shelves
 				onTabChange={name => toggleActiveShelf(name)}
-				shelves={manifest.shelves}
+				shelves={getShelves()}
 			/>
-			<ActiveShelf buttons={activeShelf.buttons} />
+			<ActiveShelf buttons={getButtons()} />
 		</div>
 	);
 };

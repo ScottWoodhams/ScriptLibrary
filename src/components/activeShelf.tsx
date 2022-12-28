@@ -8,7 +8,7 @@ export type ActiveShelfProps = {
 //* Container for buttons which displays all the buttons for the active shelf
 export const ActiveShelf = ({ buttons }: ActiveShelfProps) => {
 	return (
-		<div>
+		<div id="activeShelf">
 			{buttons.map((item, index) => (
 				<ShelfButton
 					key={index}
