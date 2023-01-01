@@ -7,10 +7,14 @@
   "host": [
     {
       "app": "PS",
-      "minVersion": "22.0.0"
-    }
+      "minVersion": "24.0.0",
+      "data" : {
+        "apiVersion": 2
+      }
+      }
   ],
   "requiredPermissions": {
+    "localFileSystem": "fullAccess",
     "allowCodeGenerationFromStrings": true,
     "network": {
       "domains": "all"

@@ -1,5 +1,7 @@
 import { app } from "photoshop";
-import { storage, fs } from "uxp";
+// ! eval is not good but webpack cant import the fs module for some reason
+const fs = eval('require("fs")')
+import { storage } from "uxp";
 import { Manifest } from "./Manifest";
 
 export function retrieveManifestLink(): string {
@@ -36,9 +38,9 @@ export async function loadManifest(): Promise<Manifest> {
 		const myObject: Response = await fetch(manifestLink);
 		remoteManifest = JSON.parse(await myObject.text());
 	} else {
-		remoteManifest = JSON.parse(
-			await fs.readFile(manifestLink, { encoding: "utf-8" })
-		);
+		const file = await fs.readFile("file:///" + manifestLink, { encoding: 'utf8' } );
+		console.log(file)
+		remoteManifest = JSON.parse(file);
 	}
 
 	// Load locally stored manifest
@@ -67,12 +69,12 @@ export async function loadManifest(): Promise<Manifest> {
 }
 
 export async function loadIcon(iconName: string): Promise<string> {
-	const imgurl = retrieveManifestLink().replace(
+	const url = retrieveManifestLink().replace(
 		"manifest.json",
 		`icons/${iconName}.png`
 	);
 
-	const res = await fetch(imgurl);
+	const res = await fetch(url);
 	const blob = await res.blob();
 	return URL.createObjectURL(blob);
 }

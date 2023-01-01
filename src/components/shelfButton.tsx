@@ -30,8 +30,9 @@ export const ShelfButton = ({
 	}, []);
 
 	function runScript() {
+		const scriptUrl = retrieveManifestLink().replace("manifest.json", `scripts/${scriptPath}.js`)
 		const script = document.createElement("script");
-		script.src = scriptPath;
+		script.src = scriptUrl;
 		script.onload = function() {
 			// we can remove the script after its loaded so we dont clog up the HTML from many script uses
 			document.documentElement.firstChild.removeChild(script);
