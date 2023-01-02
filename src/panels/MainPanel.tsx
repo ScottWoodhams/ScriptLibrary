@@ -10,14 +10,21 @@ export const MainPanel = () => {
 	const [manifest, setManifest] = useState<Manifest>();
 
 	function toggleActiveShelf(shelf: string) {
+		console.log(shelf)
 		if (manifest === undefined || manifest === null) {
 			setActiveShelf(manifest.shelves[0]);
 			return;
 		}
+
+		for (let i = 0; i < manifest.shelves.length; i++) {
+				document.getElementById(manifest.shelves[i].name).classList.remove("selected");
+		}
+
 		for (let i = 0; i < manifest.shelves.length; i++) {
 			if (manifest.shelves[i].name === shelf) {
+				document.getElementById(shelf).classList.add("selected");
 				setActiveShelf(manifest.shelves[i]);
-				break;
+
 			}
 		}
 	}

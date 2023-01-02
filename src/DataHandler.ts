@@ -68,13 +68,32 @@ export async function loadManifest(): Promise<Manifest> {
 	}
 }
 
+export async function loadAsset(url: string) {
+	if (isWebLink(url)){
+		const res = await fetch(url);
+		const blob = await res.blob();
+		return URL.createObjectURL(blob);
+	}
+	else {
+		return "file:///" + url;
+	}
+}
+
 export async function loadIcon(iconName: string): Promise<string> {
 	const url = retrieveManifestLink().replace(
 		"manifest.json",
-		`icons/${iconName}.png`
+		`icons/${iconName}.svg`
 	);
 
-	const res = await fetch(url);
-	const blob = await res.blob();
-	return URL.createObjectURL(blob);
+	return await loadAsset(url);
+}
+
+export function getFullScriptPath(scriptPath: string): string  {
+	const scriptUrl = retrieveManifestLink().replace("manifest.json", `scripts/${scriptPath}.js`);
+	if(isWebLink(scriptUrl)){
+		return scriptUrl
+	}else {
+		return "file:///" + scriptUrl;
+	}
+
 }

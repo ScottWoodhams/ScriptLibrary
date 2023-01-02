@@ -1,5 +1,5 @@
 import React from "react";
-import { loadIcon, retrieveManifestLink } from "../DataHandler";
+import {getFullScriptPath, loadAsset, loadIcon, loadScript, retrieveManifestLink} from "../DataHandler";
 import "./shelfButton.css";
 
 export type ShelfButtonProps = {
@@ -17,21 +17,19 @@ export const ShelfButton = ({
 	tooltip
 }: ShelfButtonProps) => {
 	const imageRef = React.useRef();
-	const imgurl = retrieveManifestLink().replace("manifest.json", `icons/${icon}.svg`)
-
 	React.useEffect(() => {
-		fetch(imgurl)
-			.then(res => res.blob()) // Gets the response and returns it as a blob
-			.then(blob => {
-				if (imageRef.current !== undefined) {
-					imageRef.current.src = URL.createObjectURL(blob);
-				}
-			});
+		loadIcon(icon).then(r => {
+			if (imageRef.current !== undefined) {
+				imageRef.current.src = r;
+			}
+		})
 	}, []);
 
 	function runScript() {
-		const scriptUrl = retrieveManifestLink().replace("manifest.json", `scripts/${scriptPath}.js`)
+
+		let scriptUrl = getFullScriptPath(scriptPath)
 		const script = document.createElement("script");
+
 		script.src = scriptUrl;
 		script.onload = function() {
 			// we can remove the script after its loaded so we dont clog up the HTML from many script uses

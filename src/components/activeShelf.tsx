@@ -1,6 +1,7 @@
 import React from "react";
 import { ShelfButton } from "./shelfButton";
 import { Button } from "../Manifest";
+import "../components/activeShelf.css"
 
 export type ActiveShelfProps = {
 	buttons: Button[];
@@ -8,7 +9,7 @@ export type ActiveShelfProps = {
 //* Container for buttons which displays all the buttons for the active shelf
 export const ActiveShelf = ({ buttons }: ActiveShelfProps) => {
 	return (
-		<div id="activeShelf">
+		<div id="activeShelf" className={"activeShelf"}>
 			{buttons.map((item, index) => (
 				<ShelfButton
 					key={index}
