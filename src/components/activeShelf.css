@@ -1,0 +1,6 @@
+.activeShelf{
+    background-color: #535353;
+    display: flex;
+    flex-flow: row;
+    margin-top: 2px;
+}

@@ -7,7 +7,7 @@ const _Component = Symbol("_Component");
 const _menuItems = Symbol("_menuItems");
 
 export class PanelController {
-    
+
     constructor(Component, { id, menuItems } = {}) {
         this[_id] = null;
         this[_root] = null;

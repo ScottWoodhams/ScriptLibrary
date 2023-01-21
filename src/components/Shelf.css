@@ -1,8 +1,0 @@
-.shelf {
-    background-color: #454545;
-    outline-color: #646464;
-    border: 1px solid #636364;
-    display: flex;
-    flex-flow: row nowrap;
-    min-height: 48px;
-}

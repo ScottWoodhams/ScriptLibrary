@@ -1,0 +1,24 @@
+{
+    "version": "0.0.7",
+    "shelves":
+    [
+      {
+        "name":"DEV",
+        "buttons":
+        [
+          {
+            "name": "Alert",
+            "icon": "Alert",
+            "tooltip": "This will display an alert",
+            "scriptPath": "Alert"
+          },
+          {
+            "name": "Dialog",
+            "icon": "Dialog",
+            "tooltip": "Test dialog",
+            "scriptPath": "Dialog"
+          }
+        ]
+      }
+    ]
+  }

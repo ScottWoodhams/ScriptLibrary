@@ -7,10 +7,14 @@
   "host": [
     {
       "app": "PS",
-      "minVersion": "22.0.0"
-    }
+      "minVersion": "24.0.0",
+      "data" : {
+        "apiVersion": 2
+      }
+      }
   ],
   "requiredPermissions": {
+    "localFileSystem": "fullAccess",
     "allowCodeGenerationFromStrings": true,
     "network": {
       "domains": "all"
@@ -38,13 +42,13 @@
 
     {
       "type": "panel",
-      "id": "library",
+      "id": "shelf",
       "label": {
-        "default": "Library"
+        "default": "shelf"
       },
       "minimumSize": {
-        "width": 230,
-        "height": 50
+        "width": 100,
+        "height": 100
       },
       "maximumSize": {
         "width": 2000,
@@ -52,11 +56,11 @@
       },
       "preferredDockedSize": {
         "width": 230,
-        "height": 50
+        "height": 100
       },
       "preferredFloatingSize": {
         "width": 230,
-        "height": 50
+        "height": 100
       },
       "icons": [
         {

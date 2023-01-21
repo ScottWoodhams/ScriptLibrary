@@ -6,7 +6,7 @@ const _Component = Symbol("_Component");
 const _dialogOpts = Symbol("_dialogOpts");
 
 export class CommandController {
-    
+
     constructor(Component, { id, ...dialogOpts } = {}) {
         this[_id] = null;
         this[_root] = null;

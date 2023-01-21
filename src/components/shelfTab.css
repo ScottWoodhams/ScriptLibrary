@@ -1,0 +1,35 @@
+.shelfTab {
+    margin-right: 12px;
+}
+.shelfTab sp-label {
+    color: rgba(255,255,255,0.75);
+}
+
+.shelfTab:hover sp-label {
+    color: white;
+}
+
+.shelfTab.selected {
+    border-bottom: 2px solid white;
+    margin-bottom: -2px;
+}
+.shelfTab.selected sp-label {
+    color: white;
+}
+@media (prefers-color-scheme: light), (prefers-color-scheme: light) {
+    .shelves {
+        border-bottom: 2px solid #B8B8B8;
+    }
+    .shelfTab sp-label {
+        color: rgba(0,0,0,0.66);
+    }
+    .shelfTab:hover sp-label {
+        color: black;
+    }
+    .shelfTab.selected {
+        border-bottom: 2px solid black;
+    }
+    .shelfTab.selected sp-label {
+        color: black;
+    }
+}
