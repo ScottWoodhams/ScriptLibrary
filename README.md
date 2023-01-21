@@ -1,4 +1,4 @@
-# Script Librar
+# Script Library
 
 This plugin creates a panel to display shelves for scripts. These get populated from an external source via a JSON manifest 
 
