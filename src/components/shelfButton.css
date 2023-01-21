@@ -1,6 +1,14 @@
 .shelfButton{
-    height: 36px;
-    width: 36px;
+    height: 48px;
+    width: 48px;
     display: flex;
     flex-flow: column;
+    padding: 4px;
+    margin-left: 4px;
+}
+
+.shelfButton:hover{
+    background-color: #454545;
+    border: solid #656566 1px;
+    border-radius: 4px;
 }
